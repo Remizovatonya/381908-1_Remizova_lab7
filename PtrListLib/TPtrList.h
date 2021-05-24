@@ -1,7 +1,6 @@
 #pragma once 
 
 #include <fstream>
-#include "TPtrListElem.h"
 #include "TPtrListIter.h"
 #include "iostream"
 
@@ -97,7 +96,7 @@ TPtrList<T>::TPtrList(TPtrList<T>& _v)
 
     TPtrListElem<T>* iter = _v.root;
     if (iter != 0) {
-        auto* buffer = new TPtrListElem<T>(*iter);
+        TPtrListElem<T>* buffer = new TPtrListElem<T>(*iter);
         buffer->SetPrev(0);
         buffer->SetNext(0);
         this->root = buffer;
@@ -153,7 +152,7 @@ TPtrList<T>& TPtrList<T>::operator =(TPtrList<T>& _v)
 
     TPtrListElem<T>* iter = _v.root;
     if (iter != 0) {
-        auto* buffer = new TPtrListElem<T>(*iter);
+        TPtrListElem<T>* buffer = new TPtrListElem<T>(*iter);
         buffer->SetPrev(0);
         buffer->SetNext(0);
         this->root = buffer;
@@ -193,7 +192,7 @@ inline void TPtrList<T>::InsFirst(T d)
 template<class T>
 inline void TPtrList<T>::InsLast(T d)
 {
-    auto* elem = new TPtrListElem<T>(d);
+    TPtrListElem<T>* elem = new TPtrListElem<T>(d);
     elem->SetNext(0);
     elem->SetPrev(this->last);
     if (this->last != 0)
@@ -207,7 +206,7 @@ inline void TPtrList<T>::InsLast(T d)
 template<class T>
 inline void TPtrList<T>::Ins(TPtrListElem<T>* e, T d)
 {
-    auto* elem = new TPtrListElem<T>(d);
+    TPtrListElem<T>* elem = new TPtrListElem<T>(d);
     elem->SetNext(e->GetNext());
     elem->SetPrev(e);
     e->GetNext()->SetPrev(elem);
@@ -226,7 +225,7 @@ inline bool TPtrList<T>::IsFull(void) const
 {
     try
     {
-        auto* tmp = new TPtrListElem<T>(0);
+        TPtrListElem<T>* tmp = new TPtrListElem<T>(0);
         delete tmp;
         return false;
     }
@@ -252,7 +251,7 @@ inline TPtrListElem<T>* TPtrList<T>::GetLast()
 template<class T>
 inline void TPtrList<T>::DelFirst()
 {
-    auto* elem = this->root;
+    TPtrListElem<T>* elem = this->root;
     this->root = this->root->GetNext();
     delete elem;
     this->count--;
@@ -261,7 +260,7 @@ inline void TPtrList<T>::DelFirst()
 template<class T>
 inline void TPtrList<T>::DelLast()
 {
-    auto* elem = this->last;
+    TPtrListElem<T>* elem = this->last;
     this->last = this->last->GetPrev;
     delete elem;
     this->count--;
@@ -290,7 +289,7 @@ TPtrList<T>& TPtrList<T>::load(const char* name) {
         throw "Cant open such file";
     int size;
     file >> size;
-    auto* list = new TPtrList();
+    TPtrList<T>* list = new TPtrList();
     file >> *list;
     file.close();
     return *list;
@@ -308,7 +307,7 @@ void TPtrList<T>::save(const char* name) {
 
 template<class T>
 TPtrList<int>& TPtrList<T>::multiplesToK(int k) {
-    auto* c = new TPtrList();
+    TPtrList<T>* c = new TPtrList();
     iterator i = this->begin();
     while (this->end() != i) {
         if (*i % k == 0) {
